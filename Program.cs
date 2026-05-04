@@ -110,38 +110,36 @@ namespace PoolQueue
             {
                 loclist[i+1] = new Location(xlist[i+1], ylist[i+1]);
                 poolList[i] = new Pool(namelist[i], loclist[i+1], new Temperature());
-                Console.WriteLine(poolList[i].ToString());
+                //Console.WriteLine(poolList[i].ToString());
                 Console.WriteLine("Pools instantiated: " + Pool.count.ToString());
             }
 
             double distance;
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 7; i++) //walk through location list
             {
                 distance = getDist(loclist[i], poolList[i].Loc); 
 
-                for (int j = i; j < 7; j++)
+                for (int j = i; j < 7; j++) //walk through pool list
 
                     if (getDist(loclist[i], poolList[j].Loc) < distance)
                     {
                         distance = getDist(poolList[i].Loc, poolList[j].Loc);
-                        (poolList[i], poolList[j]) = (poolList[j], poolList[i]); //swap the elements
+                        (poolList[i], poolList[j]) = (poolList[j], poolList[i]); //if we find a closer pool, swap the elements
                         (loclist[i], loclist[j + 1]) = (loclist[j + 1], loclist[i]);
                     }
                 }
 
-            Console.Write("\n\n\n");
+            Console.Write("\n\n\n(0,0) ");
 
-            for(int i = 0; i < 7; i++)
+            for(int i = 0; i < 7; i++)  //walk through the path we discovered, setting temp at each pool
             {
                 poolList[i].Temp.SetTemp(); 
-                Console.WriteLine(poolList[i].ToString());
-                if(i < 6) { Console.WriteLine("Distance to next pool: " + Math.Round(getDist(poolList[i].Loc, poolList[i + 1].Loc),2).ToString()); }
-                
+                Console.Write("\n >>> " + poolList[i].ToString());
             }
        
 
-            double getDist(Location a, Location b)  //gets distance btwn two pools using 
+            double getDist(Location a, Location b)  //gets distance btwn two locations 
             {
                 return Math.Sqrt(Math.Pow((a.X - b.X), 2) + Math.Pow(a.Y - b.Y, 2));
             }
@@ -151,4 +149,5 @@ namespace PoolQueue
        
     }
 }
+
 
